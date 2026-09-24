@@ -1,0 +1,133 @@
+{
+  "preset": "soft-piano",
+  "params": {"volume": 0.8},
+  "presets": [
+    {"name": "soft-piano"},
+    {
+      "name": "e-piano",
+      "attack": 0.004,
+      "decay": 2.2,
+      "sustain": 0.15,
+      "release": 0.35,
+      "chorus": 0.6,
+      "detune": 5,
+      "partials": [
+        {"ratio": 1, "level": 1},
+        {"ratio": 2, "level": 0.05, "velocity": 0.3, "decay": 0.4},
+        {"ratio": 3, "velocity": 0.1, "decay": 0.15},
+        {"ratio": 7, "velocity": 0.06, "decay": 0.05}
+      ]
+    },
+    {
+      "name": "warm-pad",
+      "attack": 0.35,
+      "decay": 3,
+      "sustain": 0.85,
+      "release": 1.2,
+      "chorus": 0.9,
+      "detune": 8,
+      "reverb": 0.35,
+      "reverbSize": 0.88,
+      "velocity": 0.4,
+      "partials": [
+        {"ratio": 1, "level": 1},
+        {"ratio": 2, "level": 0.2},
+        {"ratio": 3, "level": 0.06}
+      ]
+    },
+    {
+      "name": "music-box",
+      "attack": 0.002,
+      "decay": 0.8,
+      "sustain": 0,
+      "release": 0.5,
+      "chorus": 0.15,
+      "reverb": 0.3,
+      "partials": [
+        {"ratio": 1, "level": 1, "decay": 1.5},
+        {"ratio": 2.76, "level": 0.15, "velocity": 0.1, "decay": 0.3},
+        {"ratio": 5.4, "level": 0.04, "velocity": 0.05, "decay": 0.12}
+      ]
+    },
+    {
+      "name": "organ",
+      "attack": 0.015,
+      "decay": 1,
+      "sustain": 1,
+      "release": 0.08,
+      "chorus": 0.4,
+      "detune": 3,
+      "velocity": 0.2,
+      "partials": [
+        {"ratio": 0.5, "level": 0.3},
+        {"ratio": 1, "level": 1},
+        {"ratio": 2, "level": 0.5},
+        {"ratio": 3, "level": 0.2},
+        {"ratio": 4, "level": 0.12}
+      ]
+    },
+    {
+      "name": "strings",
+      "attack": 0.25,
+      "decay": 2,
+      "sustain": 0.9,
+      "release": 0.6,
+      "chorus": 0.8,
+      "detune": 10,
+      "vibrato": 0.08,
+      "vibratoRate": 5.5,
+      "reverb": 0.3,
+      "velocity": 0.5,
+      "partials": [
+        {"ratio": 1, "level": 1},
+        {"ratio": 2, "level": 0.3},
+        {"ratio": 3, "level": 0.15},
+        {"ratio": 4, "level": 0.08},
+        {"ratio": 5, "level": 0.05}
+      ]
+    },
+    {
+      "name": "glass",
+      "attack": 0.003,
+      "decay": 2.5,
+      "sustain": 0,
+      "release": 1,
+      "chorus": 0.3,
+      "reverb": 0.35,
+      "reverbSize": 0.88,
+      "partials": [
+        {"ratio": 1, "level": 1, "decay": 3},
+        {"ratio": 2, "level": 0.3, "decay": 1},
+        {"ratio": 3, "level": 0.1, "decay": 0.6},
+        {"ratio": 4.2, "level": 0.06, "velocity": 0.04, "decay": 0.3}
+      ]
+    }
+  ],
+  "controls": [
+    {"cc": 30, "param": "volume", "min": 0, "max": 1},
+    {"cc": 31, "param": "brightness", "min": 0, "max": 2},
+    {"cc": 32, "param": "attack", "min": 0.002, "max": 1.5, "curve": "exp"},
+    {"cc": 33, "param": "decay", "min": 0.1, "max": 6, "curve": "exp"},
+    {"cc": 34, "param": "sustain", "min": 0, "max": 1},
+    {"cc": 35, "param": "release", "min": 0.05, "max": 4, "curve": "exp"},
+    {"cc": 36, "param": "chorus", "min": 0, "max": 1},
+    {"cc": 37, "param": "reverb", "min": 0, "max": 0.6},
+    {"pitchBend": true, "param": "transpose", "min": -12, "max": 12, "step": 1},
+    {"cc": 1, "param": "vibrato", "min": 0, "max": 0.4},
+    {"note": 40, "channel": 10, "action": "preset", "preset": "soft-piano"},
+    {"note": 41, "channel": 10, "action": "preset", "preset": "e-piano"},
+    {"note": 42, "channel": 10, "action": "preset", "preset": "warm-pad"},
+    {"note": 43, "channel": 10, "action": "nextPreset"},
+    {"note": 48, "channel": 10, "action": "preset", "preset": "music-box"},
+    {"note": 49, "channel": 10, "action": "preset", "preset": "organ"},
+    {"note": 50, "channel": 10, "action": "preset", "preset": "strings"},
+    {"note": 51, "channel": 10, "action": "preset", "preset": "glass"},
+    {"note": 36, "channel": 10, "action": "add", "param": "transpose", "value": -12, "min": -36, "max": 36},
+    {"note": 37, "channel": 10, "action": "add", "param": "transpose", "value": 12, "min": -36, "max": 36},
+    {"note": 38, "channel": 10, "action": "add", "param": "transpose", "value": -1, "min": -36, "max": 36},
+    {"note": 39, "channel": 10, "action": "add", "param": "transpose", "value": 1, "min": -36, "max": 36},
+    {"note": 44, "channel": 10, "action": "set", "param": "transpose", "value": 0},
+    {"note": 45, "channel": 10, "action": "toggle", "param": "vibrato", "values": [0, 0.15]},
+    {"note": 46, "channel": 10, "action": "panic"}
+  ]
+}
