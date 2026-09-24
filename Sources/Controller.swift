@@ -91,9 +91,9 @@ final class Controller {
     }
 
     private func setParam(_ p: Param, _ v: Float, announce: Bool) {
+        let v = v + 0 // -0 を 0 にする
         guard params[keyPath: p.keyPath] != v else { return }
         params[keyPath: p.keyPath] = v
-        if p == .transpose { post(.allNotesOff) } // 押しっぱなしの音が取り残されないように
         post(.params(params))
         if announce { log("\(p.rawValue) = \(v)") }
     }

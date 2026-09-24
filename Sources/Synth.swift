@@ -30,7 +30,6 @@ struct Voice {
     var env: Float = 0
     var gain: Float = 0
     var panL: Float = 0, panR: Float = 0
-    var freq: Float = 0
     var phase = SIMD8<Float>(repeating: 0)
     var amp = SIMD8<Float>(repeating: 0)  // 各 partial の現在の音量（時間で減衰）
     var chorusPhase: Float = 0.25
@@ -133,7 +132,6 @@ final class Synth {
         voice.sustained = false
         voice.stage = .attack
         voice.age = counter
-        voice.freq = 440 * powf(2, Float(note - 69) / 12)
         voice.gain = ((1 - sens) + sens * powf(v, 1.6)) * keyScale
         voice.panL = cosf((pan + 1) * .pi / 4)
         voice.panR = sinf((pan + 1) * .pi / 4)
@@ -168,7 +166,8 @@ final class Synth {
 
         let p = params
         let count = p.partials.count
-        let bendMult = powf(2, p.bend / 12)
+        // transpose は鳴っている音にも即座に効かせる（ストリップで動かしても音が切れない）
+        let pitchOffset = p.transpose.rounded() + p.bend - 69
         let chorusRatio = powf(2, p.detune / 1200)
         // ratio == 1 の partial は基音、それ以外は brightness で量を変える
         var bright = SIMD8<Float>(repeating: p.brightness)
@@ -179,8 +178,9 @@ final class Synth {
         var anyActive = false
         for i in 0..<Synth.maxVoices where voices[i].active {
             var v = voices[i]
-            let baseInc = p.partials.ratio * (v.freq * bendMult / sr)
-            let chorusInc = v.freq * bendMult * chorusRatio / sr
+            let freq = 440 * powf(2, (Float(v.key) + pitchOffset) / 12)
+            let baseInc = p.partials.ratio * (freq / sr)
+            let chorusInc = freq * chorusRatio / sr
             var lfo = lfoPhase
             for f in 0..<frames {
                 switch v.stage {
