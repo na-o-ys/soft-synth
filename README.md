@@ -106,7 +106,7 @@ note に割り当てると押している間 max、離すと min になる。
 - [examples/smk25ii.json](examples/smk25ii.json): M-VAVE SMK-25 II 向け
   - ノブ 1–8（CC 30–37）: volume / brightness / attack / decay / sustain / release / chorus / reverb
   - PITCH ストリップ: transpose ±12、MOD ストリップ: vibrato
-  - パッド上段（note 40–43, 48–51）: プリセット選択、下段（36–39, 44–46）: オクターブ・半音移調、移調リセット、ビブラート切替、全消音
-  - 本体の仕様で下段 8 番目のパッドは上段 4 番目と同じ note 43 を送るため、どちらも nextPreset にしている
+  - パッド上段（note 40–43, 48–51）: プリセット選択（note 43 は nextPreset）、下段（36–39, 44–47）: オクターブ・半音移調、移調リセット、ビブラート切替、全消音、prevPreset
+  - 工場出荷時の本体設定では下段 8 番目のパッドが上段 4 番目と同じ note 43 を送る。本体の設定を note 47 に変更して使う前提
 
 自分の鍵盤用の設定は `make monitor` でノブやパッドを触り、表示された番号を controls に書けばよい。

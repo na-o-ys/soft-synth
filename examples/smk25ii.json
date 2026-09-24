@@ -128,6 +128,7 @@
     {"note": 39, "channel": 10, "action": "add", "param": "transpose", "value": 1, "min": -36, "max": 36},
     {"note": 44, "channel": 10, "action": "set", "param": "transpose", "value": 0},
     {"note": 45, "channel": 10, "action": "toggle", "param": "vibrato", "values": [0, 0.15]},
-    {"note": 46, "channel": 10, "action": "panic"}
+    {"note": 46, "channel": 10, "action": "panic"},
+    {"note": 47, "channel": 10, "action": "prevPreset"}
   ]
 }
