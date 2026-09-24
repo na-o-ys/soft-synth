@@ -6,6 +6,8 @@
 	<string>local.soft-synth</string>
 	<key>CFBundleName</key>
 	<string>soft-synth</string>
+	<key>LSUIElement</key>
+	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Bluetooth MIDI 鍵盤に自動接続するために使用します。</string>
 </dict>

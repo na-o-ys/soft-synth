@@ -1,5 +1,5 @@
 // soft-synth: MIDI 鍵盤を常駐・軽量なやわらかいシンセ音で鳴らすだけのデーモン
-import Foundation
+import AppKit
 
 func log(_ s: String) {
     let ts = ISO8601DateFormatter().string(from: Date())
@@ -40,8 +40,7 @@ let controller = Controller()
 let audio = AudioOutput()
 let watcher = ConfigWatcher(url: configURL) { controller.load($0) }
 watcher.start()
-audio.start()
-let midiInput = MIDIInput { controller.handle(status: $0, d1: $1, d2: $2) }
+let midiInput = MIDIInput { if audio.isEnabled { controller.handle(status: $0, d1: $1, d2: $2) } }
 // Bluetooth 権限のない環境（ターミナル等）でも動くよう --demo / --no-bluetooth では BLE を使わない
 let bleConnector = args.contains("--demo") || args.contains("--no-bluetooth") ? nil : BLEMIDIConnector()
 
@@ -56,5 +55,11 @@ if args.contains("--demo") {
 }
 
 signal(SIGTERM) { _ in exit(0) }
-// CoreMIDI の接続変更通知はメインスレッドの RunLoop で届くので dispatchMain ではなく RunLoop を回す
-withExtendedLifetime((midiInput, bleConnector, watcher)) { CFRunLoopRun() }
+
+// メニューバー常駐（Dock には出さない）。NSApplication がメインスレッドの RunLoop を回すので
+// CoreMIDI の接続変更通知もここで届く
+let app = NSApplication.shared
+app.setActivationPolicy(.accessory)
+let statusBar = StatusBar { audio.setEnabled($0) }
+audio.setEnabled(args.contains("--demo") || statusBar.isOn)
+withExtendedLifetime((midiInput, bleConnector, watcher, statusBar)) { app.run() }
