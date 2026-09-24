@@ -7,7 +7,9 @@ LOG      := $(HOME)/Library/Logs/soft-synth.log
 
 build:
 	mkdir -p build
-	swiftc -O -swift-version 5 Sources/main.swift -o build/soft-synth
+	swiftc -O -swift-version 5 Sources/main.swift -o build/soft-synth \
+		-Xlinker -sectcreate -Xlinker __TEXT -Xlinker __info_plist -Xlinker Info.plist
+	codesign -s - -f -i local.soft-synth build/soft-synth
 
 demo: build
 	./build/soft-synth --demo
